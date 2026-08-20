@@ -34,14 +34,18 @@ cadastrarProduto(produtos, {
 
 //procurar produto
 function procurarProduto(lista, nome) {
+
     
     for(let i = 0; i < lista.length; i++) {
-        if(lista[i].nome === nome) {
+        let nomeLista = lista[i].nome.toLowerCase()
+        let nomeProcurar = nome.toLowerCase()
+
+        if(nomeLista === nomeProcurar) {
             return lista[i]
         }
     }
-
     return null
+
 }
 
 // console.log(procurarProduto(produtos, "Mouse"))
@@ -70,7 +74,7 @@ function saidaEstoque(lista, nome, quantidade) {
 
     if(produto) {
         if(quantidade > produto.quantidade) {
-            return null
+            return "Quantidade de saída maior que quantidade em estoque"
         }
         produto.quantidade -= quantidade
         return produto
@@ -99,14 +103,7 @@ function resumoEstoque(lista) {
         resumo.quantidadeTotal += quantidade
         resumo.valorTotalEstoque += preco * quantidade
 
-        if(resumo.produtoMaisCaro === null) {
-            resumo.produtoMaisCaro = {
-                nome: nome,
-                preco: preco
-            }
-        }
-
-        if(preco > resumo.produtoMaisCaro.preco) {
+        if(resumo.produtoMaisCaro === null || preco > resumo.produtoMaisCaro.preco) {
             resumo.produtoMaisCaro = {
                 nome: nome,
                 preco: preco
@@ -150,8 +147,16 @@ function menu() {
             case "1":
                 let nome = prompt("Nome do produto: ")
                 let categoria = prompt("Categoria do produto: ")
-                let preco = Number(prompt("Preço do produto: "))
-                let quantidade = Number(prompt("Quantidade do produto: "))
+                let preco = NaN
+                let quantidade = NaN
+
+                while(Number.isNaN(preco) || preco <= 0) {
+                    preco = Number(prompt("Preco do produto: "))
+                }
+
+                while(Number.isNaN(quantidade) || quantidade <= 0) {
+                    quantidade = Number(prompt("Quantidade do produto: "))
+                }
 
                 let produto = {
                     id: produtos.length + 1,
@@ -165,23 +170,56 @@ function menu() {
                 break
 
             case "2":
-                procurarProduto()
+                let nomeProcura = prompt("Qual produto quer encontrar?")
+                let resultadoProcura = procurarProduto(produtos, nomeProcura)
+
+                if(resultadoProcura) {
+                    console.log(resultadoProcura) 
+                } else {
+                    console.log("Produto não encontrado") 
+                }
                 break
 
             case "3":
-                entradaEstoque()
+                let nomeEntrada = prompt("Qual é o nome do produto?")
+                let quantidadeEntrada = NaN
+
+                while(Number.isNaN(quantidadeEntrada) || quantidadeEntrada <= 0) {
+                    quantidadeEntrada = Number(prompt("Qual a quantidade de entrada?"))
+                }
+
+                let resultadoEntrada = entradaEstoque(produtos, nomeEntrada, quantidadeEntrada)
+
+                if(resultadoEntrada) {
+                    console.log(resultadoEntrada)
+                } else {
+                    console.log("O produto não foi encontrado")
+                }
                 break
 
             case "4":
-                saidaEstoque()
+                let nomeSaida = prompt("Qual o nome do produto?")
+                let quantidadeSaida = NaN
+
+                while(Number.isNaN(quantidadeSaida) || quantidadeSaida <= 0) {
+                    quantidadeSaida = Number(prompt("Qual a quantidade de saída?"))
+                }
+
+                let resultadoSaida = saidaEstoque(produtos, nomeSaida, quantidadeSaida)
+
+                if(resultadoSaida) {
+                    console.log(resultadoSaida)
+                } else {
+                    console.log("Produto não encontrado ou quantidade de saída maior que quantidade em estoque")
+                }
                 break
         
             case "5":
-                listarProdutos()
+                listarProdutos(produtos)
                 break
 
             case "6":
-                resumoEstoque()
+                console.log(resumoEstoque(produtos))
                 break
 
             case "0":
