@@ -217,7 +217,7 @@ A ideia é começar pela construção da **lógica do sistema**, evoluir para um
 
 **Gabriel Cerbaro**
 
-📈 Desenvolvedor em formação | ADS | Full Stack em construção | JavaScript • Node.js • React | Técnico em Informática
+📈 Desenvolvedor em formação | ADS | Full Stack em construção | JavaScript • Node.js | Técnico em Informática
 
 <p>
   <a href="https://github.com/gabrielcerbaro">
