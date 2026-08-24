@@ -1,13 +1,13 @@
 const produtos = [
     {
-        id: 1,
+        id: crypto.randomUUID(),
         nome: "Mouse",
         categoria: "Periféricos",
         preco: 80,
         quantidade: 10
     },
     {
-        id: 2,
+        id: crypto.randomUUID(),
         nome: "Teclado",
         categoria: "Periféricos",
         preco: 150,
@@ -22,7 +22,7 @@ function cadastrarProduto(lista, produto) {
 }
 
 cadastrarProduto(produtos, {
-    id: 3,
+    id: crypto.randomUUID(),
     nome: "Monitor",
     categoria: "Monitores",
     preco: 900,
@@ -34,7 +34,6 @@ cadastrarProduto(produtos, {
 
 //procurar produto
 function procurarProduto(lista, nome) {
-
     
     for(let i = 0; i < lista.length; i++) {
         let nomeLista = lista[i].nome.toLowerCase()
@@ -128,6 +127,22 @@ function listarProdutos(lista) {
 listarProdutos(produtos)
 
 
+// editar produto
+function editarProduto(lista, nome) {
+    let produto = procurarProduto(lista, nome)
+
+    if(produto) {
+        if(quantidade > 0) {
+            lista.produto + quantidade
+        } else {
+            lista.produto - quantidade
+        }
+    } else {
+        return null
+    }
+}
+
+
 //menu
 function menu() {
     let continuar = true
@@ -159,7 +174,7 @@ function menu() {
                 }
 
                 let produto = {
-                    id: produtos.length + 1,
+                    id: crypto.randomUUID(),
                     nome: nome,
                     categoria: categoria,
                     preco: preco,
