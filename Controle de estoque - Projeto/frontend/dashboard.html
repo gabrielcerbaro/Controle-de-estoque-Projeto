@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estoque | Início</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body class="pagina-app apareceSuave">
+    <header class="cabecalho-app">
+        <img src="assets/logo.png" alt="Estoque" class="logo-topo">
+        <div class="area-usuario">
+            <span id="nomeUsuarioLogado"></span>
+            <a href="perfil.html" title="Perfil">
+                <img src="assets/avatar-padrao.svg" alt="Perfil" class="avatar-perfil" id="avatarPerfil">
+            </a>
+            <button id="botaoSair">Sair</button>
+        </div>
+    </header>
+
+    <main>
+        <div class="barra-acoes">
+            <button class="botao-acao botao-acao-primario" id="botaoEntrada">+ Entrada de produto</button>
+            <button class="botao-acao" id="botaoSaida">Saída de produto</button>
+            <a href="financeiro.html" class="botao-acao">Financeiro</a>
+        </div>
+
+        <section class="cards-resumo" id="cardsResumo">
+            <div class="card-resumo">
+                <span class="card-resumo-numero" id="numeroTotalProdutos">–</span>
+                <span class="card-resumo-legenda">Produtos cadastrados</span>
+            </div>
+            <div class="card-resumo">
+                <span class="card-resumo-numero" id="numeroQuantidadeTotal">–</span>
+                <span class="card-resumo-legenda">Itens em estoque</span>
+            </div>
+            <div class="card-resumo">
+                <span class="card-resumo-numero" id="numeroValorEstoque">–</span>
+                <span class="card-resumo-legenda">Valor total em estoque</span>
+            </div>
+        </section>
+
+        <section>
+            <div class="linha-titulo-secao">
+                <h2>Seu estoque</h2>
+                <input type="text" id="buscaProduto" placeholder="Buscar produto...">
+            </div>
+
+            <div id="listaProdutos" class="grade-produtos">
+                <!-- produtos entram aqui via JS -->
+            </div>
+
+            <p id="estadoVazio" class="estado-vazio" style="display: none;">
+                Nenhum produto cadastrado ainda. Use o botão <strong>"+ Entrada de produto"</strong> acima pra começar.
+            </p>
+        </section>
+    </main>
+
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

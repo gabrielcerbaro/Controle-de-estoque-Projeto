@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estoque | Saída de produto</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/entrada.css">
+    <link rel="stylesheet" href="css/saida.css">
+</head>
+<body class="pagina-app apareceSuave">
+    <header class="cabecalho-app">
+        <img src="assets/logo.png" alt="Estoque" class="logo-topo">
+        <div class="area-usuario">
+            <a href="dashboard.html" class="botao-icone">← Cancelar</a>
+        </div>
+    </header>
+
+    <main class="conteudo-estreito">
+        <h1>Saída de produto</h1>
+
+        <!-- Busca do produto -->
+        <div id="blocoBusca">
+            <input type="text" id="buscaProdutoSaida" placeholder="Digite o nome do produto..." autocomplete="off">
+            <div id="resultadosBusca" class="resultados-busca"></div>
+        </div>
+
+        <p class="mensagem-erro" id="mensagemErroSaida"></p>
+
+        <!-- Produto selecionado + formulário rápido -->
+        <div id="blocoFormulario" style="display:none;">
+            <div class="tabela-item">
+                <p class="tabela-item-titulo" id="nomeProdutoSelecionado"></p>
+                <div class="tabela-item-campo"><label>Em estoque</label><span id="estoqueDisponivel"></span></div>
+                <div class="tabela-item-campo"><label>Valor de custo unitário</label><span id="custoUnitario"></span></div>
+            </div>
+
+            <div class="pergunta-obrigatoria">
+                <label for="quantidadeSaida">Quantidade vendida</label>
+                <input type="number" id="quantidadeSaida" min="1">
+            </div>
+
+            <div class="pergunta-obrigatoria">
+                <label for="valorVendaUnitario">Valor de venda (unitário)</label>
+                <input type="number" id="valorVendaUnitario" min="0" step="0.01">
+            </div>
+
+            <div class="caixa-alerta" id="caixaAlertaPrejuizo" style="display:none;"></div>
+
+            <div class="botoes-navegacao">
+                <button class="botao-acao" id="botaoTrocarProduto">Trocar produto</button>
+                <button class="botao-acao botao-acao-primario" id="botaoRegistrarSaida">Registrar saída</button>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/saida.js"></script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+/* Paleta de cores do sistema, baseada na logo */
+:root {
+    --cor-fundo: #ffffff;
+    --cor-texto: #1B2A3A;      /* azul-marinho escuro, quase preto */
+    --cor-destaque: #2E7D52;   /* verde da logo — botões, ícones, links */
+    --cor-destaque-hover: #256341;
+    --cor-alerta: #C0392B;     /* vermelho — usado só em alertas e gráfico de gastos */
+    --cor-borda: #E5E8EB;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background-color: var(--cor-fundo);
+    color: var(--cor-texto);
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+h1, h2, h3 {
+    font-weight: 700;
+}
+
+/* Transição suave ao carregar uma página logada */
+.apareceSuave {
+    animation: fadeInPagina 0.4s ease;
+}
+
+@keyframes fadeInPagina {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.pagina-app {
+    min-height: 100vh;
+}
+
+.cabecalho-app {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 24px;
+    border-bottom: 1px solid var(--cor-borda);
+}
+
+.logo-topo {
+    height: 64px;
+}
+
+.area-usuario {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 700;
+}
+
+.area-usuario button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    background-color: var(--cor-destaque);
+    color: #ffffff;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.area-usuario button:hover {
+    background-color: var(--cor-destaque-hover);
+}
+
+.avatar-perfil {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--cor-destaque);
+    background-color: #F1F8F4;
+    cursor: pointer;
+}
+
+main {
+    padding: 24px;
+}

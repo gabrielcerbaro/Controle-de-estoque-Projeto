@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estoque | Login</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/login.css">
+</head>
+<body class="pagina-login">
+    <div class="card-login" id="cardLogin">
+        <img src="assets/logo.png" alt="Estoque" class="logo-login">
+
+        <form id="formLogin">
+            <label for="usuario">Usuário</label>
+            <input type="text" id="usuario" name="usuario" autocomplete="username" required>
+
+            <label for="senha">Senha</label>
+            <input type="password" id="senha" name="senha" autocomplete="current-password" required>
+
+            <p class="mensagem-erro" id="mensagemErro"></p>
+
+            <button type="submit" id="botaoEntrar">Entrar</button>
+        </form>
+    </div>
+
+    <script src="js/login.js"></script>
+</body>
+</html>

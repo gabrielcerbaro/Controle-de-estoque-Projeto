@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estoque | Financeiro</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/financeiro.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+</head>
+<body class="pagina-app apareceSuave">
+    <header class="cabecalho-app">
+        <img src="assets/logo.png" alt="Estoque" class="logo-topo">
+        <div class="area-usuario">
+            <a href="dashboard.html" class="botao-icone">← Voltar</a>
+        </div>
+    </header>
+
+    <main>
+        <h1>Financeiro</h1>
+
+        <div class="seletor-mes">
+            <select id="seletorMes"></select>
+            <select id="seletorAno"></select>
+            <button class="botao-acao botao-acao-primario" id="botaoFecharMes">Fechar mês</button>
+        </div>
+
+        <section class="cards-resumo">
+            <div class="card-resumo">
+                <span class="card-resumo-numero" id="numeroTotalComprado">–</span>
+                <span class="card-resumo-legenda">Total comprado no mês</span>
+            </div>
+            <div class="card-resumo">
+                <span class="card-resumo-numero" id="numeroTotalVendido">–</span>
+                <span class="card-resumo-legenda">Total vendido no mês</span>
+            </div>
+            <div class="card-resumo">
+                <span class="card-resumo-numero" id="numeroLucro">–</span>
+                <span class="card-resumo-legenda">Lucro bruto</span>
+            </div>
+            <div class="card-resumo">
+                <span class="card-resumo-numero" id="numeroMargem">–</span>
+                <span class="card-resumo-legenda">Margem sobre vendas</span>
+            </div>
+        </section>
+
+        <section class="bloco-grafico">
+            <h2>Últimos 6 meses</h2>
+            <canvas id="graficoBarras" height="90"></canvas>
+        </section>
+
+        <section class="bloco-relatorio">
+            <h2>Relatório do mês</h2>
+            <p id="insightMes" class="texto-insight"></p>
+
+            <h3>Produtos mais vendidos</h3>
+            <ol id="listaMaisVendidos" class="lista-relatorio"></ol>
+
+            <h3>Maior percentual de lucro</h3>
+            <p id="produtoMaiorLucro"></p>
+        </section>
+
+        <section class="bloco-historico">
+            <h2>Meses já fechados</h2>
+            <div id="listaFechamentos"></div>
+        </section>
+    </main>
+
+    <script src="js/financeiro.js"></script>
+</body>
+</html>

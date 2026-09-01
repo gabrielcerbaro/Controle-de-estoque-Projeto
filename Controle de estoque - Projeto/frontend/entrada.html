@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estoque | Entrada de produto</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/entrada.css">
+</head>
+<body class="pagina-app apareceSuave">
+    <header class="cabecalho-app">
+        <img src="assets/logo.png" alt="Estoque" class="logo-topo">
+        <div class="area-usuario">
+            <a href="dashboard.html" class="botao-icone">← Cancelar</a>
+        </div>
+    </header>
+
+    <main class="conteudo-estreito">
+        <h1>Entrada de produto</h1>
+
+        <div class="passos" id="indicadorPassos">
+            <span class="passo ativo" data-passo="1">1. Enviar XML</span>
+            <span class="passo" data-passo="2">2. Conferir itens</span>
+            <span class="passo" data-passo="3">3. Parcelamento</span>
+            <span class="passo" data-passo="4">4. Confirmar</span>
+        </div>
+
+        <p class="mensagem-erro" id="mensagemErroGeral"></p>
+
+        <!-- ETAPA 1: Upload do XML -->
+        <section class="etapa" id="etapa1">
+            <p>Selecione o arquivo XML da nota fiscal (NF-e) da compra.</p>
+            <input type="file" id="inputXml" accept=".xml">
+            <p class="status-arquivo" id="statusArquivoXml"></p>
+        </section>
+
+        <!-- ETAPA 2: Conferência dos itens -->
+        <section class="etapa" id="etapa2" style="display:none;">
+            <p>Confira os dados extraídos da nota. Preencha a <strong>categoria</strong> de cada produto (obrigatório) e ajuste o peso se precisar.</p>
+            <div id="tabelaItens"></div>
+            <div class="botoes-navegacao">
+                <button class="botao-acao" id="botaoVoltarEtapa1">Voltar</button>
+                <button class="botao-acao botao-acao-primario" id="botaoAvancarEtapa2">Avançar</button>
+            </div>
+        </section>
+
+        <!-- ETAPA 3: Parcelamento e juros -->
+        <section class="etapa" id="etapa3" style="display:none;">
+            <div class="pergunta-obrigatoria">
+                <label>A compra foi parcelada?</label>
+                <div class="opcoes-sim-nao">
+                    <button type="button" class="botao-opcao" data-grupo="parcelado" data-valor="sim">Sim</button>
+                    <button type="button" class="botao-opcao" data-grupo="parcelado" data-valor="nao">Não</button>
+                </div>
+            </div>
+
+            <div class="pergunta-obrigatoria" id="perguntaNumeroParcelas" style="display:none;">
+                <label for="numeroParcelas">Em quantas vezes?</label>
+                <input type="number" id="numeroParcelas" min="2" placeholder="Ex: 3">
+            </div>
+
+            <div class="pergunta-obrigatoria" id="perguntaJuros" style="display:none;">
+                <label>Houve incidência de juros no parcelamento?</label>
+                <div class="opcoes-sim-nao">
+                    <button type="button" class="botao-opcao" data-grupo="juros" data-valor="sim">Sim</button>
+                    <button type="button" class="botao-opcao" data-grupo="juros" data-valor="nao">Não</button>
+                </div>
+            </div>
+
+            <div class="pergunta-obrigatoria" id="perguntaValorComJuros" style="display:none;">
+                <label for="valorComJuros">Qual o valor TOTAL da compra já com os juros?</label>
+                <input type="number" id="valorComJuros" min="0" step="0.01" placeholder="Ex: 1050.00">
+            </div>
+
+            <div class="botoes-navegacao">
+                <button class="botao-acao" id="botaoVoltarEtapa2">Voltar</button>
+                <button class="botao-acao botao-acao-primario" id="botaoAvancarEtapa3">Avançar</button>
+            </div>
+        </section>
+
+        <!-- ETAPA 4: Confirmação final -->
+        <section class="etapa" id="etapa4" style="display:none;">
+            <p>Confira os valores finais antes de salvar. Depois de confirmado, isso entra no seu estoque.</p>
+            <div id="resumoFinal"></div>
+            <div class="botoes-navegacao">
+                <button class="botao-acao" id="botaoVoltarEtapa3">Voltar</button>
+                <button class="botao-acao botao-acao-primario" id="botaoConfirmarEntrada">Confirmar entrada</button>
+            </div>
+        </section>
+    </main>
+
+    <script src="js/entrada.js"></script>
+</body>
+</html>

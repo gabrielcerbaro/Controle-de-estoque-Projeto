@@ -1,0 +1,57 @@
+.seletor-mes {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin: 16px 0 28px;
+    flex-wrap: wrap;
+}
+
+.seletor-mes select {
+    padding: 10px 12px;
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.bloco-grafico, .bloco-relatorio, .bloco-historico {
+    border: 1px solid var(--cor-borda);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 24px;
+}
+
+.bloco-grafico h2, .bloco-relatorio h2, .bloco-historico h2 {
+    margin-top: 0;
+}
+
+.texto-insight {
+    line-height: 1.6;
+    background-color: #F1F8F4;
+    border-radius: 8px;
+    padding: 14px;
+}
+
+.lista-relatorio {
+    padding-left: 20px;
+}
+
+.lista-relatorio li {
+    margin-bottom: 6px;
+}
+
+.item-fechamento {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--cor-borda);
+    font-size: 14px;
+}
+
+.item-fechamento:last-child {
+    border-bottom: none;
+}
+
+.item-fechamento-mes {
+    font-weight: 700;
+}

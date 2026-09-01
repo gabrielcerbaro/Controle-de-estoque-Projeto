@@ -1,0 +1,90 @@
+.pagina-login {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--cor-fundo);
+}
+
+.card-login {
+    width: 320px;
+    padding: 40px 32px;
+    border: 1px solid var(--cor-borda);
+    border-radius: 12px;
+    text-align: center;
+    opacity: 0;
+    animation: apareceCard 0.5s ease forwards;
+}
+
+.card-login.saindo {
+    animation: somem 0.4s ease forwards;
+}
+
+@keyframes apareceCard {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes somem {
+    from { opacity: 1; transform: translateY(0); }
+    to { opacity: 0; transform: translateY(-12px); }
+}
+
+.logo-login {
+    width: 120px;
+    margin-bottom: 24px;
+}
+
+.card-login form {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.card-login label {
+    font-size: 13px;
+    font-weight: 700;
+    margin: 12px 0 4px;
+}
+
+.card-login input {
+    padding: 10px 12px;
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+.card-login input:focus {
+    outline: none;
+    border-color: var(--cor-destaque);
+}
+
+.mensagem-erro {
+    color: var(--cor-alerta);
+    font-size: 13px;
+    font-weight: 700;
+    min-height: 18px;
+    margin: 10px 0 0;
+}
+
+.card-login button {
+    margin-top: 18px;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background-color: var(--cor-destaque);
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.card-login button:hover {
+    background-color: var(--cor-destaque-hover);
+}
+
+.card-login button:disabled {
+    opacity: 0.6;
+    cursor: default;
+}

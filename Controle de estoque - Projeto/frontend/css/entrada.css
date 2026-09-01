@@ -1,0 +1,134 @@
+.conteudo-estreito {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 24px;
+}
+
+.passos {
+    display: flex;
+    gap: 8px;
+    margin: 20px 0 28px;
+    flex-wrap: wrap;
+}
+
+.passo {
+    font-size: 13px;
+    font-weight: 700;
+    color: #A6B1BA;
+    padding: 6px 12px;
+    border-radius: 20px;
+    background-color: #F5F6F7;
+}
+
+.passo.ativo {
+    color: #ffffff;
+    background-color: var(--cor-destaque);
+}
+
+.passo.concluido {
+    color: var(--cor-destaque);
+    background-color: #F1F8F4;
+}
+
+.etapa input[type="file"] {
+    display: block;
+    margin: 16px 0;
+}
+
+.status-arquivo {
+    font-size: 14px;
+    font-weight: 700;
+    margin: 4px 0 0;
+    color: #5A6B7A;
+}
+
+.status-arquivo.status-ok {
+    color: var(--cor-destaque);
+}
+
+.status-arquivo.status-erro {
+    color: var(--cor-alerta);
+}
+
+.botoes-navegacao {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 24px;
+}
+
+.pergunta-obrigatoria {
+    margin-bottom: 20px;
+}
+
+.pergunta-obrigatoria label {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.pergunta-obrigatoria input[type="number"] {
+    padding: 10px 12px;
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
+    font-size: 15px;
+    width: 100%;
+    max-width: 260px;
+}
+
+.opcoes-sim-nao {
+    display: flex;
+    gap: 10px;
+}
+
+.botao-opcao {
+    padding: 10px 24px;
+    border: 2px solid var(--cor-borda);
+    border-radius: 8px;
+    background-color: #ffffff;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.botao-opcao.selecionado {
+    border-color: var(--cor-destaque);
+    background-color: var(--cor-destaque);
+    color: #ffffff;
+}
+
+/* Tabela de itens (etapas 2 e 4) */
+.tabela-item {
+    border: 1px solid var(--cor-borda);
+    border-radius: 10px;
+    padding: 16px;
+    margin-bottom: 14px;
+}
+
+.tabela-item-titulo {
+    font-weight: 700;
+    margin: 0 0 12px;
+}
+
+.tabela-item-campo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    gap: 12px;
+}
+
+.tabela-item-campo label {
+    font-size: 13px;
+    color: #5A6B7A;
+}
+
+.tabela-item-campo input {
+    padding: 8px 10px;
+    border: 1px solid var(--cor-borda);
+    border-radius: 6px;
+    width: 160px;
+    text-align: right;
+}
+
+.tabela-item-campo input.campo-invalido {
+    border-color: var(--cor-alerta);
+}

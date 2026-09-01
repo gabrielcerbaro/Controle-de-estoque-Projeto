@@ -1,0 +1,32 @@
+[
+  {
+    "id": "exemplo-1",
+    "codigo": "MOU-001",
+    "nome": "Mouse sem fio",
+    "categoria": "Periféricos",
+    "valorTotalCompra": 640,
+    "valorUnitario": 64,
+    "pesoBruto": 0.12,
+    "quantidade": 10
+  },
+  {
+    "id": "exemplo-2",
+    "codigo": "TEC-002",
+    "nome": "Teclado mecânico",
+    "categoria": "Periféricos",
+    "valorTotalCompra": 750,
+    "valorUnitario": 150,
+    "pesoBruto": 0.9,
+    "quantidade": 0
+  },
+  {
+    "id": "exemplo-3",
+    "codigo": "MON-003",
+    "nome": "Monitor 24 polegadas",
+    "categoria": "Monitores",
+    "valorTotalCompra": 3600,
+    "valorUnitario": 900,
+    "pesoBruto": 4.5,
+    "quantidade": 4
+  }
+]
