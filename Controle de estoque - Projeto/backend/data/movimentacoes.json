@@ -1,14 +1,1 @@
-[
-  {
-    "id": "a3bac959-68a1-44e1-9211-1a73edbb3825",
-    "tipo": "saida",
-    "data": "2026-09-01T19:58:46.851Z",
-    "codigo": "TEC-002",
-    "nome": "Teclado mecânico",
-    "quantidade": 2,
-    "valorVendaUnitario": 230,
-    "valorVendaTotal": 460,
-    "valorCustoUnitario": 150,
-    "houvePrejuizo": false
-  }
-]
+[]

@@ -14,7 +14,71 @@
     font-weight: 700;
 }
 
-.bloco-grafico, .bloco-relatorio, .bloco-historico {
+.cards-resumo-financeiro {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-bottom: 28px;
+}
+
+.card-financeiro {
+    border: 1px solid var(--cor-borda);
+    border-radius: 12px;
+    padding: 20px 22px;
+    border-top: 4px solid var(--cor-borda);
+    background-color: #ffffff;
+}
+
+.card-financeiro-legenda {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    color: #5A6B7A;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    margin-bottom: 8px;
+}
+
+.card-financeiro-numero {
+    display: block;
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 1.1;
+}
+
+.card-financeiro-comprado {
+    border-top-color: var(--cor-alerta);
+}
+.card-financeiro-comprado .card-financeiro-numero {
+    color: var(--cor-alerta);
+}
+
+.card-financeiro-vendido {
+    border-top-color: var(--cor-destaque);
+}
+.card-financeiro-vendido .card-financeiro-numero {
+    color: var(--cor-destaque);
+}
+
+.card-financeiro-lucro.positivo {
+    border-top-color: var(--cor-destaque);
+}
+.card-financeiro-lucro.positivo .card-financeiro-numero {
+    color: var(--cor-destaque);
+}
+.card-financeiro-lucro.negativo {
+    border-top-color: var(--cor-alerta);
+}
+.card-financeiro-lucro.negativo .card-financeiro-numero {
+    color: var(--cor-alerta);
+}
+
+.card-financeiro-margem {
+    border-top-color: var(--cor-texto);
+}
+.card-financeiro-margem .card-financeiro-numero {
+    color: var(--cor-texto);
+}
     border: 1px solid var(--cor-borda);
     border-radius: 10px;
     padding: 20px;

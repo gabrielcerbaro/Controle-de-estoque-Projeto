@@ -54,6 +54,8 @@ function carregarResumoMes() {
             document.getElementById('numeroTotalComprado').textContent = formatarReais(resumo.totalComprado);
             document.getElementById('numeroTotalVendido').textContent = formatarReais(resumo.totalVendido);
             document.getElementById('numeroLucro').textContent = formatarReais(resumo.lucro);
+            document.getElementById('cardLucro').classList.toggle('positivo', resumo.lucro >= 0);
+            document.getElementById('cardLucro').classList.toggle('negativo', resumo.lucro < 0);
             document.getElementById('numeroMargem').textContent = `${resumo.margemPercentual}%`;
 
             document.getElementById('insightMes').textContent = resumo.insight;

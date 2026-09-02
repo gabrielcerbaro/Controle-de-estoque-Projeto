@@ -25,6 +25,16 @@ document.getElementById('botaoSair').addEventListener('click', async () => {
     window.location.href = 'index.html';
 });
 
+// Corrige uma falha comum: se a pessoa volta pra essa tela usando o botão
+// "voltar" do navegador, ele às vezes mostra uma versão salva em cache da
+// página (com os números antigos). Isso força recarregar os dados nesse caso.
+window.addEventListener('pageshow', (evento) => {
+    if (evento.persisted) {
+        carregarResumo();
+        carregarProdutos();
+    }
+});
+
 // --- Cards de resumo ---
 function carregarResumo() {
     fetch('/api/produtos/resumo')
@@ -62,15 +72,17 @@ function renderizarProdutos(produtos) {
         const card = document.createElement('div');
         card.className = 'card-produto';
 
-        const quantidadeBaixa = produto.quantidade <= 3;
+        const quantidadeBaixa = produto.quantidade > 0 && produto.quantidade <= 3;
+        const semEstoque = produto.quantidade === 0;
 
         card.innerHTML = `
             <span class="card-produto-categoria">${produto.categoria || 'Sem categoria'}</span>
+            ${semEstoque ? '<span class="card-produto-sem-estoque">Sem estoque</span>' : ''}
             <p class="card-produto-nome">${produto.nome}</p>
             <p class="card-produto-codigo">Código: ${produto.codigo}</p>
             <div class="card-produto-linha">
                 <span>Quantidade</span>
-                <strong class="${quantidadeBaixa ? 'card-produto-quantidade-baixa' : ''}">${produto.quantidade}</strong>
+                <strong class="${quantidadeBaixa || semEstoque ? 'card-produto-quantidade-baixa' : ''}">${produto.quantidade}</strong>
             </div>
             <div class="card-produto-linha">
                 <span>Valor unitário</span>
