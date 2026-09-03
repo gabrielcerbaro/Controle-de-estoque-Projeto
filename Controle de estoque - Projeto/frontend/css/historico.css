@@ -1,0 +1,65 @@
+.filtros-historico {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+    margin: 16px 0 24px;
+}
+
+.filtros-historico select,
+.filtros-historico input[type="text"] {
+    padding: 10px 12px;
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.filtros-historico label {
+    font-size: 13px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.filtros-historico input[type="date"] {
+    padding: 8px 10px;
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
+}
+
+.linha-historico {
+    display: grid;
+    grid-template-columns: 110px 90px 1fr 70px 110px 110px;
+    gap: 10px;
+    align-items: center;
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--cor-borda);
+    font-size: 14px;
+}
+
+.linha-historico.cabecalho {
+    font-weight: 700;
+    color: #5A6B7A;
+    font-size: 12px;
+    text-transform: uppercase;
+    border-bottom: 2px solid var(--cor-borda);
+}
+
+.tag-tipo {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.tag-tipo.entrada {
+    background-color: #F1F8F4;
+    color: var(--cor-destaque);
+}
+
+.tag-tipo.saida {
+    background-color: #FBEAE8;
+    color: var(--cor-alerta);
+}

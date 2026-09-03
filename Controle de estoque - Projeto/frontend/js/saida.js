@@ -1,6 +1,5 @@
 // frontend/js/saida.js
-// Fluxo rápido de saída: buscar produto -> quantidade + valor de venda -> registrar.
-// Se o valor de venda for menor que o custo, avisa mas deixa continuar.
+// Fluxo de saída com carrinho: adiciona quantos produtos quiser antes de finalizar.
 
 fetch('/api/auth/status')
     .then(resposta => resposta.json())
@@ -10,17 +9,19 @@ fetch('/api/auth/status')
 
 let todosOsProdutos = [];
 let produtoSelecionado = null;
+let itensVenda = [];
+let aPrazo = null;
+let numeroParcelasVenda = null;
 
-fetch('/api/produtos')
-    .then(resposta => resposta.json())
-    .then(produtos => { todosOsProdutos = produtos; });
+function carregarProdutosDoServidor() {
+    fetch('/api/produtos')
+        .then(resposta => resposta.json())
+        .then(produtos => { todosOsProdutos = produtos; });
+}
+carregarProdutosDoServidor();
 
 window.addEventListener('pageshow', (evento) => {
-    if (evento.persisted) {
-        fetch('/api/produtos')
-            .then(resposta => resposta.json())
-            .then(produtos => { todosOsProdutos = produtos; });
-    }
+    if (evento.persisted) carregarProdutosDoServidor();
 });
 
 const buscaInput = document.getElementById('buscaProdutoSaida');
@@ -63,17 +64,15 @@ function selecionarProduto(produto) {
     document.getElementById('blocoFormulario').style.display = 'block';
 }
 
-document.getElementById('botaoTrocarProduto').addEventListener('click', () => {
+document.getElementById('botaoTrocarProduto').addEventListener('click', voltarParaBusca);
+
+function voltarParaBusca() {
     produtoSelecionado = null;
     document.getElementById('blocoFormulario').style.display = 'none';
     document.getElementById('blocoBusca').style.display = 'block';
-});
+}
 
-document.getElementById('botaoRegistrarSaida').addEventListener('click', () => {
-    registrarSaida(false);
-});
-
-async function registrarSaida(confirmarMesmoComPrejuizo) {
+document.getElementById('botaoAdicionarCarrinho').addEventListener('click', () => {
     mensagemErroSaida.textContent = '';
 
     const quantidade = Number(document.getElementById('quantidadeSaida').value);
@@ -83,12 +82,93 @@ async function registrarSaida(confirmarMesmoComPrejuizo) {
         mensagemErroSaida.textContent = 'Informe a quantidade vendida.';
         return;
     }
+    if (quantidade > produtoSelecionado.quantidade) {
+        mensagemErroSaida.textContent = `Quantidade maior que o estoque disponível (${produtoSelecionado.quantidade}).`;
+        return;
+    }
     if (!valorVenda || valorVenda <= 0) {
         mensagemErroSaida.textContent = 'Informe o valor de venda.';
         return;
     }
 
-    const botao = document.getElementById('botaoRegistrarSaida');
+    itensVenda.push({
+        codigo: produtoSelecionado.codigo,
+        nome: produtoSelecionado.nome,
+        quantidade,
+        valorVenda,
+        custoUnitario: produtoSelecionado.valorUnitario
+    });
+
+    renderizarCarrinho();
+    voltarParaBusca();
+});
+
+function renderizarCarrinho() {
+    const listaCarrinho = document.getElementById('listaCarrinho');
+    listaCarrinho.innerHTML = '';
+    let total = 0;
+
+    itensVenda.forEach((item, indice) => {
+        total += item.quantidade * item.valorVenda;
+
+        const linha = document.createElement('div');
+        linha.className = 'item-carrinho';
+        linha.innerHTML = `
+            <span>${item.nome} — ${item.quantidade} un. × ${formatarReais(item.valorVenda)}</span>
+            <button type="button" data-indice="${indice}" class="botao-remover-item">Remover</button>
+        `;
+        listaCarrinho.appendChild(linha);
+    });
+
+    listaCarrinho.querySelectorAll('.botao-remover-item').forEach(botao => {
+        botao.addEventListener('click', () => {
+            itensVenda.splice(Number(botao.dataset.indice), 1);
+            renderizarCarrinho();
+        });
+    });
+
+    document.getElementById('totalCarrinho').textContent = formatarReais(total);
+
+    const temItens = itensVenda.length > 0;
+    document.getElementById('blocoCarrinho').style.display = temItens ? 'block' : 'none';
+    document.getElementById('blocoFinalizar').style.display = temItens ? 'block' : 'none';
+}
+
+// --- Parcelamento da venda (uma vez só, pra venda inteira) ---
+document.querySelectorAll('.botao-opcao[data-grupo="aPrazo"]').forEach(botao => {
+    botao.addEventListener('click', () => {
+        const valor = botao.dataset.valor === 'sim';
+        document.querySelectorAll('.botao-opcao[data-grupo="aPrazo"]').forEach(b => b.classList.remove('selecionado'));
+        botao.classList.add('selecionado');
+
+        aPrazo = valor;
+        document.getElementById('perguntaParcelasVenda').style.display = valor ? 'block' : 'none';
+        if (!valor) numeroParcelasVenda = null;
+    });
+});
+
+document.getElementById('numeroParcelasVenda').addEventListener('input', (e) => {
+    numeroParcelasVenda = Number(e.target.value);
+});
+
+// --- Finalizar venda ---
+document.getElementById('botaoFinalizarVenda').addEventListener('click', () => {
+    finalizarVenda(false);
+});
+
+async function finalizarVenda(confirmarMesmoComPrejuizo) {
+    mensagemErroSaida.textContent = '';
+
+    if (aPrazo === null) {
+        mensagemErroSaida.textContent = 'Informe se a venda foi a prazo.';
+        return;
+    }
+    if (aPrazo && (!numeroParcelasVenda || numeroParcelasVenda < 2)) {
+        mensagemErroSaida.textContent = 'Informe em quantas vezes a venda foi parcelada.';
+        return;
+    }
+
+    const botao = document.getElementById('botaoFinalizarVenda');
     botao.disabled = true;
     botao.textContent = 'Registrando...';
 
@@ -97,28 +177,26 @@ async function registrarSaida(confirmarMesmoComPrejuizo) {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                codigo: produtoSelecionado.codigo,
-                quantidade,
-                valorVenda,
+                itens: itensVenda,
+                aPrazo,
+                numeroParcelas: aPrazo ? numeroParcelasVenda : 1,
                 confirmarMesmoComPrejuizo
             })
         });
         const dados = await resposta.json();
 
         if (!resposta.ok) {
-            mensagemErroSaida.textContent = dados.erro || 'Não foi possível registrar a saída.';
+            mensagemErroSaida.textContent = dados.erro || 'Não foi possível registrar a venda.';
             botao.disabled = false;
-            botao.textContent = 'Registrar saída';
+            botao.textContent = 'Finalizar venda';
             return;
         }
 
         if (dados.alerta) {
             const confirmou = confirm(`${dados.mensagem}\n\nDeseja continuar mesmo assim?`);
             botao.disabled = false;
-            botao.textContent = 'Registrar saída';
-            if (confirmou) {
-                await registrarSaida(true);
-            }
+            botao.textContent = 'Finalizar venda';
+            if (confirmou) await finalizarVenda(true);
             return;
         }
 
@@ -127,7 +205,7 @@ async function registrarSaida(confirmarMesmoComPrejuizo) {
     } catch (erro) {
         mensagemErroSaida.textContent = 'Não foi possível conectar ao servidor.';
         botao.disabled = false;
-        botao.textContent = 'Registrar saída';
+        botao.textContent = 'Finalizar venda';
     }
 }
 

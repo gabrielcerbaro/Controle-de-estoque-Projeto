@@ -39,17 +39,25 @@ function calcularResumoDoMes(ano, mes) {
         }
 
         if (mov.tipo === 'saida') {
-            if (dataMov.getFullYear() === ano && (dataMov.getMonth() + 1) === mes) {
-                totalVendido += mov.valorVendaTotal;
+            const parcelasVenda = mov.aPrazo ? mov.numeroParcelas : 1;
+            const quantidadePorParcela = mov.quantidade / parcelasVenda;
+            const valorVendaPorParcela = mov.valorVendaTotal / parcelasVenda;
+            const valorCustoPorParcela = (mov.valorCustoUnitario * mov.quantidade) / parcelasVenda;
 
-                if (!vendasPorProduto[mov.codigo]) {
-                    vendasPorProduto[mov.codigo] = { nome: mov.nome, quantidade: 0, totalVenda: 0, totalCusto: 0 };
+            for (let i = 0; i < parcelasVenda; i++) {
+                const dataParcela = new Date(dataMov.getFullYear(), dataMov.getMonth() + i, 1);
+                if (dataParcela.getFullYear() === ano && (dataParcela.getMonth() + 1) === mes) {
+                    totalVendido += valorVendaPorParcela;
+
+                    if (!vendasPorProduto[mov.codigo]) {
+                        vendasPorProduto[mov.codigo] = { nome: mov.nome, quantidade: 0, totalVenda: 0, totalCusto: 0 };
+                    }
+                    vendasPorProduto[mov.codigo].quantidade += quantidadePorParcela;
+                    vendasPorProduto[mov.codigo].totalVenda += valorVendaPorParcela;
+                    vendasPorProduto[mov.codigo].totalCusto += valorCustoPorParcela;
+
+                    if (mov.houvePrejuizo) quantidadeVendasComPrejuizo++;
                 }
-                vendasPorProduto[mov.codigo].quantidade += mov.quantidade;
-                vendasPorProduto[mov.codigo].totalVenda += mov.valorVendaTotal;
-                vendasPorProduto[mov.codigo].totalCusto += mov.valorCustoUnitario * mov.quantidade;
-
-                if (mov.houvePrejuizo) quantidadeVendasComPrejuizo++;
             }
         }
     });
@@ -64,7 +72,7 @@ function calcularResumoDoMes(ano, mes) {
     const produtosMaisVendidos = [...listaProdutos]
         .sort((a, b) => b.quantidade - a.quantidade)
         .slice(0, 5)
-        .map(p => ({ nome: p.nome, quantidade: p.quantidade }));
+        .map(p => ({ nome: p.nome, quantidade: Math.round(p.quantidade) }));
 
     let produtoMaiorLucroPercentual = null;
     listaProdutos.forEach(p => {
@@ -143,9 +151,13 @@ router.get('/historico-grafico', (req, res) => {
                 }
             }
         }
-
+        
         if (mov.tipo === 'saida') {
-            marcar(dataMov.getFullYear(), dataMov.getMonth() + 1);
+            const parcelasVenda = mov.aPrazo ? mov.numeroParcelas : 1;
+            for (let i = 0; i < parcelasVenda; i++) {
+                const dataParcela = new Date(dataMov.getFullYear(), dataMov.getMonth() + i, 1);
+                marcar(dataParcela.getFullYear(), dataParcela.getMonth() + 1);
+            }
         }
     });
 

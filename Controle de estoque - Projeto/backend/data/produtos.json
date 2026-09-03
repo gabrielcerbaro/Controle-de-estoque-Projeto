@@ -7,17 +7,7 @@
     "valorTotalCompra": 640,
     "valorUnitario": 64,
     "pesoBruto": 0.12,
-    "quantidade": 10
-  },
-  {
-    "id": "exemplo-2",
-    "codigo": "TEC-002",
-    "nome": "Teclado mecânico",
-    "categoria": "Periféricos",
-    "valorTotalCompra": 750,
-    "valorUnitario": 150,
-    "pesoBruto": 0.9,
-    "quantidade": 0
+    "quantidade": 4
   },
   {
     "id": "exemplo-3",
@@ -27,26 +17,6 @@
     "valorTotalCompra": 3600,
     "valorUnitario": 900,
     "pesoBruto": 4.5,
-    "quantidade": 4
-  },
-  {
-    "id": "41c30783-5cc0-4528-b63d-313cdc85cda7",
-    "codigo": "90108115324",
-    "nome": "BISCOITO SALPET TRIUNFO 42X100G",
-    "categoria": "Biscoito",
-    "valorTotalCompra": 1823.18,
-    "valorUnitario": 60.77,
-    "pesoBruto": 162.771,
-    "quantidade": 0
-  },
-  {
-    "id": "675e6463-6a46-46bb-993b-3a2040275140",
-    "codigo": "90108117097",
-    "nome": "BISCOITO AGUA E SAL TRIUNFO 16X345G",
-    "categoria": "Biscoito",
-    "valorTotalCompra": 2352.7,
-    "valorUnitario": 58.82,
-    "pesoBruto": 217.029,
     "quantidade": 0
   }
 ]

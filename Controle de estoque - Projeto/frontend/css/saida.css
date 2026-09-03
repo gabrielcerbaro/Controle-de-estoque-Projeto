@@ -63,3 +63,31 @@
     font-weight: 700;
     cursor: pointer;
 }
+
+.item-carrinho {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--cor-borda);
+    font-size: 14px;
+}
+
+.botao-remover-item {
+    border: none;
+    background: none;
+    color: var(--cor-alerta);
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.total-carrinho {
+    text-align: right;
+    font-size: 16px;
+    margin: 12px 0 24px;
+}
+
+.botao-largo {
+    width: 100%;
+}

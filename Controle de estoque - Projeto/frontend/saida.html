@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Estoque | Saída de produto</title>
-    <link rel="stylesheet" href="css/style.css?v=7">
-    <link rel="stylesheet" href="css/entrada.css?v=7">
-    <link rel="stylesheet" href="css/saida.css?v=7">
+    <link rel="stylesheet" href="css/style.css?v=8">
+    <link rel="stylesheet" href="css/entrada.css?v=8">
+    <link rel="stylesheet" href="css/saida.css?v=8">
 </head>
 <body class="pagina-app apareceSuave">
     <header class="cabecalho-app">
@@ -19,6 +19,13 @@
     <main class="conteudo-estreito">
         <h1>Saída de produto</h1>
 
+        <!-- Carrinho da venda atual -->
+        <div id="blocoCarrinho" style="display:none;">
+            <h2>Itens dessa venda</h2>
+            <div id="listaCarrinho"></div>
+            <p class="total-carrinho">Total: <strong id="totalCarrinho"></strong></p>
+        </div>
+
         <!-- Busca do produto -->
         <div id="blocoBusca">
             <input type="text" id="buscaProdutoSaida" placeholder="Digite o nome do produto..." autocomplete="off">
@@ -27,7 +34,7 @@
 
         <p class="mensagem-erro" id="mensagemErroSaida"></p>
 
-        <!-- Produto selecionado + formulário rápido -->
+        <!-- Formulário do item que está sendo adicionado -->
         <div id="blocoFormulario" style="display:none;">
             <div class="tabela-item">
                 <p class="tabela-item-titulo" id="nomeProdutoSelecionado"></p>
@@ -46,12 +53,29 @@
             </div>
 
             <div class="botoes-navegacao">
-                <button class="botao-acao" id="botaoTrocarProduto">Trocar produto</button>
-                <button class="botao-acao botao-acao-primario" id="botaoRegistrarSaida">Registrar saída</button>
+                <button class="botao-acao" id="botaoTrocarProduto">Cancelar</button>
+                <button class="botao-acao botao-acao-primario" id="botaoAdicionarCarrinho">+ Adicionar à venda</button>
             </div>
+        </div>
+
+        <!-- Finalização (só aparece quando tem pelo menos 1 item no carrinho) -->
+        <div id="blocoFinalizar" style="display:none;">
+            <div class="pergunta-obrigatoria">
+                <label>Essa venda foi a prazo (parcelada)?</label>
+                <div class="opcoes-sim-nao">
+                    <button type="button" class="botao-opcao" data-grupo="aPrazo" data-valor="sim">Sim</button>
+                    <button type="button" class="botao-opcao" data-grupo="aPrazo" data-valor="nao">Não</button>
+                </div>
+            </div>
+            <div class="pergunta-obrigatoria" id="perguntaParcelasVenda" style="display:none;">
+                <label for="numeroParcelasVenda">Em quantas vezes?</label>
+                <input type="number" id="numeroParcelasVenda" min="2" placeholder="Ex: 3">
+            </div>
+
+            <button class="botao-acao botao-acao-primario botao-largo" id="botaoFinalizarVenda">Finalizar venda</button>
         </div>
     </main>
 
-    <script src="js/saida.js?v=7"></script>
+    <script src="js/saida.js?v=8"></script>
 </body>
 </html>

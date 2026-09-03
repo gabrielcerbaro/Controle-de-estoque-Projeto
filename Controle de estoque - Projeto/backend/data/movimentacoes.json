@@ -12,53 +12,59 @@
     "houvePrejuizo": false
   },
   {
-    "id": "8dcb835f-5744-4bc3-ab40-884c8cf61a82",
-    "tipo": "entrada",
-    "data": "2026-09-03T13:38:13.914Z",
-    "parcelado": true,
-    "numeroParcelas": 4,
-    "teveJuros": false,
-    "valorTotalOriginal": 4175.88,
-    "valorTotalConsiderado": 4175.88,
-    "itens": [
-      {
-        "codigo": "90108115324",
-        "nome": "BISCOITO SALPET TRIUNFO 42X100G",
-        "quantidade": 30,
-        "valorUnitario": 60.77,
-        "valorTotalItem": 1823.18
-      },
-      {
-        "codigo": "90108117097",
-        "nome": "BISCOITO AGUA E SAL TRIUNFO 16X345G",
-        "quantidade": 40,
-        "valorUnitario": 58.82,
-        "valorTotalItem": 2352.7
-      }
-    ]
+    "id": "8de1d0bb-c9f6-4212-a5fc-9954ea2320c4",
+    "tipo": "saida",
+    "data": "2026-09-03T18:37:37.162Z",
+    "codigo": "MON-003",
+    "nome": "Monitor 24 polegadas",
+    "quantidade": 1,
+    "valorVendaUnitario": 1199.99,
+    "valorVendaTotal": 1199.99,
+    "valorCustoUnitario": 900,
+    "houvePrejuizo": false,
+    "aPrazo": true,
+    "numeroParcelas": 3
   },
   {
-    "id": "82923ce8-85af-47b1-9613-1854faafcca4",
+    "id": "2c6bf4cb-d523-4cbd-87b1-64baf94ecdf6",
     "tipo": "saida",
-    "data": "2026-09-03T13:38:45.976Z",
-    "codigo": "90108115324",
-    "nome": "BISCOITO SALPET TRIUNFO 42X100G",
-    "quantidade": 30,
-    "valorVendaUnitario": 72.64,
-    "valorVendaTotal": 2179.2,
-    "valorCustoUnitario": 60.77,
-    "houvePrejuizo": false
+    "data": "2026-09-03T18:55:10.260Z",
+    "codigo": "MOU-001",
+    "nome": "Mouse sem fio",
+    "quantidade": 1,
+    "valorVendaUnitario": 80,
+    "valorVendaTotal": 80,
+    "valorCustoUnitario": 64,
+    "houvePrejuizo": false,
+    "aPrazo": false,
+    "numeroParcelas": 1
   },
   {
-    "id": "5858fde2-34ce-479e-972c-3f5274ff262c",
+    "id": "f627617b-9d96-417f-a3f1-e038ec0fc063",
     "tipo": "saida",
-    "data": "2026-09-03T13:56:43.555Z",
-    "codigo": "90108117097",
-    "nome": "BISCOITO AGUA E SAL TRIUNFO 16X345G",
-    "quantidade": 40,
-    "valorVendaUnitario": 67,
-    "valorVendaTotal": 2680,
-    "valorCustoUnitario": 58.82,
-    "houvePrejuizo": false
+    "data": "2026-09-03T18:55:10.260Z",
+    "codigo": "MOU-001",
+    "nome": "Mouse sem fio",
+    "quantidade": 4,
+    "valorVendaUnitario": 75,
+    "valorVendaTotal": 300,
+    "valorCustoUnitario": 64,
+    "houvePrejuizo": false,
+    "aPrazo": false,
+    "numeroParcelas": 1
+  },
+  {
+    "id": "9dcd67ff-0955-4d5b-88b6-345217e682ae",
+    "tipo": "saida",
+    "data": "2026-09-03T19:07:11.569Z",
+    "codigo": "MOU-001",
+    "nome": "Mouse sem fio",
+    "quantidade": 1,
+    "valorVendaUnitario": 75,
+    "valorVendaTotal": 75,
+    "valorCustoUnitario": 64,
+    "houvePrejuizo": false,
+    "aPrazo": true,
+    "numeroParcelas": 2
   }
 ]

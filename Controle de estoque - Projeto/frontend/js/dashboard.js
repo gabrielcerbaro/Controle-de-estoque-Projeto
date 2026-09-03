@@ -71,6 +71,10 @@ function renderizarProdutos(produtos) {
     produtos.forEach(produto => {
         const card = document.createElement('div');
         card.className = 'card-produto';
+        card.style.cursor = 'pointer';
+        card.addEventListener('click', () => {
+            window.location.href = `editar-produto.html?codigo=${encodeURIComponent(produto.codigo)}`;
+        });
 
         const quantidadeBaixa = produto.quantidade > 0 && produto.quantidade <= 3;
         const semEstoque = produto.quantidade === 0;

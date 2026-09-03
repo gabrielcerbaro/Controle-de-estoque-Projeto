@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estoque | Histórico</title>
+    <link rel="stylesheet" href="css/style.css?v=8">
+    <link rel="stylesheet" href="css/historico.css?v=8">
+</head>
+<body class="pagina-app apareceSuave">
+    <header class="cabecalho-app">
+        <img src="assets/logo.png" alt="Estoque" class="logo-topo">
+        <div class="area-usuario">
+            <a href="dashboard.html" class="botao-icone">← Voltar</a>
+        </div>
+    </header>
+
+    <main>
+        <h1>Histórico de movimentações</h1>
+
+        <div class="filtros-historico">
+            <select id="filtroTipo">
+                <option value="">Todos os tipos</option>
+                <option value="entrada">Só entradas</option>
+                <option value="saida">Só saídas</option>
+            </select>
+            <input type="text" id="filtroProduto" placeholder="Buscar por produto...">
+            <label>De <input type="date" id="filtroDataInicio"></label>
+            <label>Até <input type="date" id="filtroDataFim"></label>
+            <button class="botao-acao" id="botaoLimparFiltros">Limpar filtros</button>
+        </div>
+
+        <div id="listaHistorico"></div>
+        <p id="estadoVazioHistorico" class="estado-vazio" style="display:none;">Nenhuma movimentação encontrada com esses filtros.</p>
+    </main>
+
+    <script src="js/historico.js?v=8"></script>
+</body>
+</html>

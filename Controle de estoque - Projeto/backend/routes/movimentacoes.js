@@ -170,53 +170,136 @@ router.post('/entrada/confirmar', (req, res) => {
 // Fluxo rápido de saída: dá baixa no estoque. Se o valor de venda for menor
 // que o custo (valorUnitario), avisa mas NÃO bloqueia — só bloqueia de verdade
 // se a quantidade pedida for maior do que o que tem em estoque.
+// POST /api/movimentacoes/saida
+// Agora recebe uma LISTA de itens (carrinho), não 1 produto só.
+// O parcelamento (a prazo) vale pra venda inteira, não por item.
 router.post('/saida', (req, res) => {
-    const { codigo, quantidade, valorVenda, confirmarMesmoComPrejuizo } = req.body;
+    const { itens, aPrazo, numeroParcelas, confirmarMesmoComPrejuizo } = req.body;
 
-    if (!codigo || !quantidade || quantidade <= 0 || !valorVenda || valorVenda <= 0) {
-        return res.status(400).json({ erro: 'Informe o produto, a quantidade e o valor de venda' });
+    if (!itens || itens.length === 0) {
+        return res.status(400).json({ erro: 'Nenhum item na venda' });
+    }
+    for (const item of itens) {
+        if (!item.codigo || !item.quantidade || item.quantidade <= 0 || !item.valorVenda || item.valorVenda <= 0) {
+            return res.status(400).json({ erro: 'Todos os itens precisam de quantidade e valor de venda válidos' });
+        }
     }
 
     const produtos = armazenamento.ler('produtos');
-    const produto = produtos.find(p => p.codigo === codigo);
 
-    if (!produto) {
-        return res.status(404).json({ erro: 'Produto não encontrado' });
+    // Confere se todo item existe e tem estoque suficiente ANTES de mexer em qualquer coisa
+    for (const item of itens) {
+        const produto = produtos.find(p => p.codigo === item.codigo);
+        if (!produto) {
+            return res.status(404).json({ erro: `Produto "${item.codigo}" não encontrado` });
+        }
+        if (item.quantidade > produto.quantidade) {
+            return res.status(400).json({ erro: `"${produto.nome}": quantidade maior que o estoque disponível (${produto.quantidade})` });
+        }
     }
 
-    if (quantidade > produto.quantidade) {
-        return res.status(400).json({ erro: `Quantidade maior que o estoque disponível (${produto.quantidade} em estoque)` });
-    }
+    // Confere se algum item está sendo vendido abaixo do custo
+    const itensComPrejuizo = itens
+        .map(item => ({ item, produto: produtos.find(p => p.codigo === item.codigo) }))
+        .filter(({ item, produto }) => item.valorVenda < produto.valorUnitario);
 
-    const houvePrejuizo = valorVenda < produto.valorUnitario;
-
-    // Se está vendendo abaixo do custo e ainda não confirmou, avisa e não salva ainda
-    if (houvePrejuizo && !confirmarMesmoComPrejuizo) {
+    if (itensComPrejuizo.length > 0 && !confirmarMesmoComPrejuizo) {
+        const nomes = itensComPrejuizo.map(({ produto }) => produto.nome).join(', ');
         return res.json({
             alerta: true,
-            mensagem: `O valor de venda (${valorVenda.toFixed(2)}) é menor que o valor de custo (${produto.valorUnitario.toFixed(2)}) desse produto.`
+            mensagem: `Os seguintes produtos estão sendo vendidos abaixo do valor de custo: ${nomes}.`
         });
     }
 
-    produto.quantidade -= quantidade;
-    armazenamento.salvar('produtos', produtos);
-
+    // Tudo certo — agora sim aplica de verdade
     const movimentacoes = armazenamento.ler('movimentacoes');
-    movimentacoes.push({
-        id: crypto.randomUUID(),
-        tipo: 'saida',
-        data: new Date().toISOString(),
-        codigo: produto.codigo,
-        nome: produto.nome,
-        quantidade,
-        valorVendaUnitario: valorVenda,
-        valorVendaTotal: Number((valorVenda * quantidade).toFixed(2)),
-        valorCustoUnitario: produto.valorUnitario,
-        houvePrejuizo
+    const parcelasDaVenda = aPrazo ? numeroParcelas : 1;
+
+    itens.forEach(item => {
+        const produto = produtos.find(p => p.codigo === item.codigo);
+        produto.quantidade -= item.quantidade;
+
+        movimentacoes.push({
+            id: crypto.randomUUID(),
+            tipo: 'saida',
+            data: new Date().toISOString(),
+            codigo: produto.codigo,
+            nome: produto.nome,
+            quantidade: item.quantidade,
+            valorVendaUnitario: item.valorVenda,
+            valorVendaTotal: Number((item.valorVenda * item.quantidade).toFixed(2)),
+            valorCustoUnitario: produto.valorUnitario,
+            houvePrejuizo: item.valorVenda < produto.valorUnitario,
+            aPrazo: !!aPrazo,
+            numeroParcelas: parcelasDaVenda
+        });
     });
+
+    armazenamento.salvar('produtos', produtos);
     armazenamento.salvar('movimentacoes', movimentacoes);
 
-    res.json({ mensagem: 'Saída registrada com sucesso' });
+    res.json({ mensagem: 'Venda registrada com sucesso' });
+});
+
+// GET /api/movimentacoes/historico?tipo=&produto=&dataInicio=&dataFim=
+// Junta entradas e saídas numa lista só, já filtrada, pra tela de histórico.
+// Nas entradas, cada produto da nota vira uma linha própria (uma entrada
+// pode ter vários produtos numa nota só).
+router.get('/historico', (req, res) => {
+    const { tipo, produto, dataInicio, dataFim } = req.query;
+    const movimentacoes = armazenamento.ler('movimentacoes');
+    let linhas = [];
+
+    movimentacoes.forEach(mov => {
+        if (mov.tipo === 'entrada') {
+            (mov.itens || []).forEach(item => {
+                linhas.push({
+                    data: mov.data,
+                    tipo: 'entrada',
+                    codigo: item.codigo,
+                    nome: item.nome,
+                    quantidade: item.quantidade,
+                    valorUnitario: item.valorUnitario,
+                    valorTotal: item.valorTotalItem,
+                    parcelado: mov.parcelado,
+                    numeroParcelas: mov.numeroParcelas
+                });
+            });
+        } else if (mov.tipo === 'saida') {
+            linhas.push({
+                data: mov.data,
+                tipo: 'saida',
+                codigo: mov.codigo,
+                nome: mov.nome,
+                quantidade: mov.quantidade,
+                valorUnitario: mov.valorVendaUnitario,
+                valorTotal: mov.valorVendaTotal,
+                aPrazo: mov.aPrazo,
+                numeroParcelas: mov.numeroParcelas,
+                houvePrejuizo: mov.houvePrejuizo
+            });
+        }
+    });
+
+    if (tipo) {
+        linhas = linhas.filter(l => l.tipo === tipo);
+    }
+    if (produto) {
+        const termo = produto.toLowerCase();
+        linhas = linhas.filter(l => l.nome.toLowerCase().includes(termo));
+    }
+    if (dataInicio) {
+        linhas = linhas.filter(l => new Date(l.data) >= new Date(dataInicio));
+    }
+    if (dataFim) {
+        const fim = new Date(dataFim);
+        fim.setHours(23, 59, 59, 999); // inclui o dia inteiro do "até"
+        linhas = linhas.filter(l => new Date(l.data) <= fim);
+    }
+
+    linhas.sort((a, b) => new Date(b.data) - new Date(a.data));
+
+    res.json(linhas);
 });
 
 module.exports = router;
