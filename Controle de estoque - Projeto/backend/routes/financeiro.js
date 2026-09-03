@@ -116,22 +116,58 @@ router.get('/resumo-mes', (req, res) => {
     res.json(calcularResumoDoMes(ano, mes));
 });
 
-// GET /api/financeiro/historico-grafico?meses=6
-// Últimos N meses (incluindo o atual), pra alimentar o gráfico de barras
+// GET /api/financeiro/historico-grafico?ano=2026&mes=9
+// Mostra TODO mês que tem algum dado (compra, parcela caindo nele, ou venda),
+// e garante que o mês selecionado na tela sempre apareça, mesmo sem dados.
 router.get('/historico-grafico', (req, res) => {
-    const quantidadeMeses = Number(req.query.meses) || 6;
-    const hoje = new Date();
-    const historico = [];
+    const anoSelecionado = Number(req.query.ano);
+    const mesSelecionado = Number(req.query.mes);
 
-    for (let i = quantidadeMeses - 1; i >= 0; i--) {
-        const dataReferencia = new Date(hoje.getFullYear(), hoje.getMonth() - i, 1);
-        const resumo = calcularResumoDoMes(dataReferencia.getFullYear(), dataReferencia.getMonth() + 1);
-        historico.push({
-            rotulo: dataReferencia.toLocaleDateString('pt-BR', { month: 'short', year: '2-digit' }),
+    const movimentacoes = armazenamento.ler('movimentacoes');
+    const mesesComDados = new Set();
+
+    function marcar(ano, mes) {
+        mesesComDados.add(`${ano}-${mes}`);
+    }
+
+    movimentacoes.forEach(mov => {
+        const dataMov = new Date(mov.data);
+
+        if (mov.tipo === 'entrada') {
+            if (!mov.parcelado) {
+                marcar(dataMov.getFullYear(), dataMov.getMonth() + 1);
+            } else {
+                for (let i = 1; i <= mov.numeroParcelas; i++) {
+                    const dataParcela = new Date(dataMov.getFullYear(), dataMov.getMonth() + i, 1);
+                    marcar(dataParcela.getFullYear(), dataParcela.getMonth() + 1);
+                }
+            }
+        }
+
+        if (mov.tipo === 'saida') {
+            marcar(dataMov.getFullYear(), dataMov.getMonth() + 1);
+        }
+    });
+
+    if (anoSelecionado && mesSelecionado) {
+        marcar(anoSelecionado, mesSelecionado);
+    }
+
+    const listaOrdenada = [...mesesComDados]
+        .map(chave => {
+            const [ano, mes] = chave.split('-').map(Number);
+            return { ano, mes };
+        })
+        .sort((a, b) => (a.ano - b.ano) || (a.mes - b.mes));
+
+    const historico = listaOrdenada.map(({ ano, mes }) => {
+        const resumo = calcularResumoDoMes(ano, mes);
+        return {
+            rotulo: new Date(ano, mes - 1, 1).toLocaleDateString('pt-BR', { month: 'short', year: '2-digit' }),
             totalComprado: resumo.totalComprado,
             totalVendido: resumo.totalVendido
-        });
-    }
+        };
+    });
 
     res.json(historico);
 });

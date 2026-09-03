@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Estoque | Perfil</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css?v=7">
+    <link rel="stylesheet" href="css/entrada.css?v=7">
+    <link rel="stylesheet" href="css/perfil.css?v=7">
 </head>
 <body class="pagina-app apareceSuave">
     <header class="cabecalho-app">
@@ -13,9 +15,40 @@
             <a href="dashboard.html" class="botao-icone">← Voltar</a>
         </div>
     </header>
-    <main>
+
+    <main class="conteudo-estreito">
         <h1>Perfil</h1>
-        <p>Trocar senha e foto de perfil chegam em um próximo bloco.</p>
+
+        <!-- Foto -->
+        <section class="secao-perfil">
+            <h2>Foto de perfil</h2>
+            <img src="assets/avatar-padrao.svg" alt="Sua foto" class="avatar-grande" id="avatarGrande">
+            <input type="file" id="inputFoto" accept="image/*">
+            <p class="status-arquivo" id="statusFoto"></p>
+        </section>
+
+        <!-- Senha -->
+        <section class="secao-perfil">
+            <h2>Trocar senha</h2>
+            <form id="formSenha">
+                <div class="pergunta-obrigatoria">
+                    <label for="senhaAtual">Senha atual</label>
+                    <input type="password" id="senhaAtual" required>
+                </div>
+                <div class="pergunta-obrigatoria">
+                    <label for="novaSenha">Nova senha</label>
+                    <input type="password" id="novaSenha" required>
+                </div>
+                <div class="pergunta-obrigatoria">
+                    <label for="confirmarNovaSenha">Confirmar nova senha</label>
+                    <input type="password" id="confirmarNovaSenha" required>
+                </div>
+                <p class="mensagem-erro" id="mensagemSenha"></p>
+                <button type="submit" class="botao-acao botao-acao-primario" id="botaoSalvarSenha">Salvar nova senha</button>
+            </form>
+        </section>
     </main>
+
+    <script src="js/perfil.js?v=7"></script>
 </body>
 </html>

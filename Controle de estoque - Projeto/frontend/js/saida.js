@@ -15,6 +15,14 @@ fetch('/api/produtos')
     .then(resposta => resposta.json())
     .then(produtos => { todosOsProdutos = produtos; });
 
+window.addEventListener('pageshow', (evento) => {
+    if (evento.persisted) {
+        fetch('/api/produtos')
+            .then(resposta => resposta.json())
+            .then(produtos => { todosOsProdutos = produtos; });
+    }
+});
+
 const buscaInput = document.getElementById('buscaProdutoSaida');
 const resultadosBusca = document.getElementById('resultadosBusca');
 const mensagemErroSaida = document.getElementById('mensagemErroSaida');
@@ -24,7 +32,7 @@ buscaInput.addEventListener('input', () => {
     resultadosBusca.innerHTML = '';
     if (!termo) return;
 
-    const encontrados = todosOsProdutos.filter(p => p.nome.toLowerCase().includes(termo));
+    const encontrados = todosOsProdutos.filter(p => (p.nome || '').toLowerCase().includes(termo));
 
     encontrados.forEach(produto => {
         const item = document.createElement('div');
@@ -50,7 +58,6 @@ function selecionarProduto(produto) {
     document.getElementById('quantidadeSaida').value = '';
     document.getElementById('quantidadeSaida').max = produto.quantidade;
     document.getElementById('valorVendaUnitario').value = '';
-    document.getElementById('caixaAlertaPrejuizo').style.display = 'none';
 
     document.getElementById('blocoBusca').style.display = 'none';
     document.getElementById('blocoFormulario').style.display = 'block';
@@ -106,17 +113,12 @@ async function registrarSaida(confirmarMesmoComPrejuizo) {
         }
 
         if (dados.alerta) {
-            const caixa = document.getElementById('caixaAlertaPrejuizo');
-            caixa.style.display = 'block';
-            caixa.innerHTML = `
-                ${dados.mensagem}
-                <br><button id="botaoConfirmarPrejuizo">Confirmar mesmo assim</button>
-            `;
-            document.getElementById('botaoConfirmarPrejuizo').addEventListener('click', () => {
-                registrarSaida(true);
-            });
+            const confirmou = confirm(`${dados.mensagem}\n\nDeseja continuar mesmo assim?`);
             botao.disabled = false;
             botao.textContent = 'Registrar saída';
+            if (confirmou) {
+                await registrarSaida(true);
+            }
             return;
         }
 

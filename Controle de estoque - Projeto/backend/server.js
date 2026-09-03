@@ -41,6 +41,7 @@ app.use(session({
 
 // Serve os arquivos do front-end (HTML, CSS, JS) que estão na pasta /frontend
 app.use(express.static(path.join(__dirname, '..', 'frontend')));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Rota simples só pra testar se o servidor está de pé
 app.get('/api/status', (req, res) => {

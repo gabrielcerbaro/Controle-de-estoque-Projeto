@@ -1,1 +1,31 @@
-[]
+[
+  {
+    "ano": 2026,
+    "mes": 9,
+    "dataFechamento": "2026-09-03T13:54:18.168Z",
+    "resumo": {
+      "ano": 2026,
+      "mes": 9,
+      "totalComprado": 0,
+      "totalVendido": 2639.2,
+      "lucro": 2639.2,
+      "margemPercentual": 100,
+      "produtosMaisVendidos": [
+        {
+          "nome": "BISCOITO SALPET TRIUNFO 42X100G",
+          "quantidade": 30
+        },
+        {
+          "nome": "Teclado mecânico",
+          "quantidade": 2
+        }
+      ],
+      "produtoMaiorLucroPercentual": {
+        "nome": "Teclado mecânico",
+        "percentual": 53.3
+      },
+      "quantidadeVendasComPrejuizo": 0,
+      "insight": "Em setembro de 2026, o total comprado (considerando parcelas do mês) foi de R$ 0,00 e o total vendido foi de R$ 2.639,20, resultando em um lucro bruto de R$ 2.639,20 (100% de margem sobre o faturamento). O produto mais vendido foi \"BISCOITO SALPET TRIUNFO 42X100G\", com 30 unidades vendidas. O produto com maior percentual de lucro foi \"Teclado mecânico\", com 53.3% de margem sobre o custo. "
+    }
+  }
+]

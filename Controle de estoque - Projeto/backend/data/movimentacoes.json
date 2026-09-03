@@ -1,1 +1,64 @@
-[]
+[
+  {
+    "id": "ae0560fa-79b5-4cae-9829-1b68a6f74636",
+    "tipo": "saida",
+    "data": "2026-09-03T13:22:01.798Z",
+    "codigo": "TEC-002",
+    "nome": "Teclado mecânico",
+    "quantidade": 2,
+    "valorVendaUnitario": 230,
+    "valorVendaTotal": 460,
+    "valorCustoUnitario": 150,
+    "houvePrejuizo": false
+  },
+  {
+    "id": "8dcb835f-5744-4bc3-ab40-884c8cf61a82",
+    "tipo": "entrada",
+    "data": "2026-09-03T13:38:13.914Z",
+    "parcelado": true,
+    "numeroParcelas": 4,
+    "teveJuros": false,
+    "valorTotalOriginal": 4175.88,
+    "valorTotalConsiderado": 4175.88,
+    "itens": [
+      {
+        "codigo": "90108115324",
+        "nome": "BISCOITO SALPET TRIUNFO 42X100G",
+        "quantidade": 30,
+        "valorUnitario": 60.77,
+        "valorTotalItem": 1823.18
+      },
+      {
+        "codigo": "90108117097",
+        "nome": "BISCOITO AGUA E SAL TRIUNFO 16X345G",
+        "quantidade": 40,
+        "valorUnitario": 58.82,
+        "valorTotalItem": 2352.7
+      }
+    ]
+  },
+  {
+    "id": "82923ce8-85af-47b1-9613-1854faafcca4",
+    "tipo": "saida",
+    "data": "2026-09-03T13:38:45.976Z",
+    "codigo": "90108115324",
+    "nome": "BISCOITO SALPET TRIUNFO 42X100G",
+    "quantidade": 30,
+    "valorVendaUnitario": 72.64,
+    "valorVendaTotal": 2179.2,
+    "valorCustoUnitario": 60.77,
+    "houvePrejuizo": false
+  },
+  {
+    "id": "5858fde2-34ce-479e-972c-3f5274ff262c",
+    "tipo": "saida",
+    "data": "2026-09-03T13:56:43.555Z",
+    "codigo": "90108117097",
+    "nome": "BISCOITO AGUA E SAL TRIUNFO 16X345G",
+    "quantidade": 40,
+    "valorVendaUnitario": 67,
+    "valorVendaTotal": 2680,
+    "valorCustoUnitario": 58.82,
+    "houvePrejuizo": false
+  }
+]

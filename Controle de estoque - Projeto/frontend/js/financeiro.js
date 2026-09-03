@@ -39,6 +39,7 @@ seletorAno.addEventListener('change', carregarTudo);
 
 function carregarTudo() {
     carregarResumoMes();
+    carregarGrafico();
     carregarHistoricoFechamentos();
 }
 
@@ -79,7 +80,10 @@ function carregarResumoMes() {
 }
 
 function carregarGrafico() {
-    fetch('/api/financeiro/historico-grafico?meses=6')
+    const ano = seletorAno.value;
+    const mes = seletorMes.value;
+
+    fetch(`/api/financeiro/historico-grafico?ano=${ano}&mes=${mes}`)
         .then(resposta => resposta.json())
         .then(historico => {
             const ctx = document.getElementById('graficoBarras');
